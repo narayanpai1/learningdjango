@@ -1,0 +1,40 @@
+*{
+    box-sizing: border-box;
+}
+
+#content{
+    width:95%;
+    margin: 10px auto;
+}
+.commentinput{
+    margin: 0px 0px 5px 0px;
+    width:80%;
+    padding: 4px;
+}
+
+
+.userface{
+    font-size: 30px;
+}
+
+.commentwritten{
+    display: inline-block;
+    width:95%;
+}
+
+.commentbox{
+    background-color: azure;
+}
+
+.likes button{
+    background-color:rgba(0,0,0,0);
+    border:0px;
+}
+.likes{
+    float: right;
+    width:95%;
+}
+
+.likeform{
+    display: inline-block;
+}

@@ -1,0 +1,140 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load extras %}
+{% block js %}
+    <link rel="stylesheet" type="text/css" href="{%static 'main/style-menu.css'%}">
+    <script type="text/javascript">
+        var a;var b;var x;
+
+        //to make the the menu of a NC collapse up or down
+        //also change up arrow to down or vice versa
+        function removeElement(a,b)
+        {
+             if(a==1)
+                {document.getElementById("table"+b).style.display= "none";
+                 document.querySelector(".ext"+ b+" "+".down").style.display="inline-block";
+              document.querySelector(".ext"+ b+" "+"      .up").style.display="none";
+                }
+             else
+                 {document.getElementById("table"+b).style.display= "table";
+                  document.querySelector(".ext"+ b+" "+".up").style.display="inline-block";
+                  document.querySelector(".ext"+ b+" "+"      .down").style.display="none";
+                }
+        }
+
+        //filters to be shown on click
+        function filter(){
+            if(document.querySelector(".child").style.display=="none")
+            {
+                document.querySelector(".child").style.display="table";
+            }
+            else{
+             document.querySelector(".child").style.display="none";
+            }
+        }
+
+        function showlogin(){
+            if(document.querySelector("#logintable").style.display=="none")
+            {document.querySelector("#logintable").style.display="table";
+            }
+            else{
+             document.querySelector("#logintable").style.display="none";
+            }
+        }
+
+        function ticked(x){
+            if(document.querySelector(".child button[value='" + x+"'] .tick").style.backgroundColor=="grey")
+            {document.querySelector(".child button[value='" + x+"'] .tick").style.backgroundColor="red";
+            }
+            else{
+             document.querySelector(".child button[value='" + x+"'] .tick").style.backgroundColor="grey";
+            }
+        }
+
+        function filterapplied(){
+            var all;
+            for(var i=1;i<=2;i++){
+                all=document.querySelectorAll(".type"+i);
+                if(document.querySelector(".child button[value='" + i+"'] .tick").style.backgroundColor=="red"){
+                    for(var j=0;j<all.length;j++){
+                        all[j].style.display="table-row-group";
+                    }
+                }
+                else{
+                    for(var j=0;j<all.length;j++){
+                        all[j].style.display="none";
+                    }
+                }
+            }
+            document.querySelector(".child").style.display="none";
+        }
+        function dropdownmenu(){
+             if(document.querySelector("#bar2").style.display=="none")
+            {document.querySelector("#bar2").style.display="block";
+            }
+            else{
+             document.querySelector("#bar2").style.display="none";
+            }
+        }
+    </script>
+{%endblock%}
+{%block content%}
+    <div id="content">
+        <div class="container-fluid">
+        <div class="col-xs-12 col-sm-7" id="searchbar">
+            <form method="post" action="">
+                {% csrf_token %}
+                {%for items in form%}
+                    <input type="text" name="{{items.html_name}}" class="search" placeholder="{{items.label}}">
+                {%endfor%}
+            </form>
+        </div>
+<!--            space between two icons-->
+        <div class="col-xs-0 col-sm-1"></div>
+        <div id="parent" class="col-xs-12 col-sm-4">
+            <button onclick="filter()" id="filtersbutton">
+                <i class="glyphicon glyphicon-filter"></i>
+                Filters
+                <i class="glyphicon glyphicon-collapse-down" id="filterscollapse"></i>
+            </button>
+            <table class="child" style="display:none">
+                {%for foo in filter%}
+                    <tr><td><button class="filterbutton"  value="{{foo.id}}" onclick="ticked({{foo.id}})">{{foo.name}}<div class="tick" style="background-color: grey;"></div></button></td></tr>
+                {%endfor%}
+                    <tr><td><button class="filterbutton" onclick="filterapplied()" id="applyfilter">Apply</button></td></tr>
+            </table>
+        </div>
+        </div>
+        <br>
+        {% regroup dishes by nc.id as groupeditems %}
+        {%for foo in groupeditems%}
+            <div class="NCName">
+                <a href="\{{foo.1.0.nc.id}}">{{foo.1.0.nc.name}}</a>
+                    <span class="menuExtension ext{{foo.1.0.nc.id}}"><button class="up" onclick="removeElement(1,'{{foo.1.0.nc.id}}')"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                    <button class="down" onclick="removeElement(0,'{{foo.1.0.nc.id}}')">
+                    <i class="glyphicon glyphicon-chevron-down" ></i></button>
+                    </span>
+            </div>
+            <table id="table{{foo.1.0.nc.id}}" class="menutable">
+                <tbody>
+                    <tr class="heading" ><th class="firstcol">Item</th><th class="seccol">Price</th></tr>
+                </tbody>
+                {%sort_by_filter foo.1 as groupedbyfilters%}
+                {%for bar in groupedbyfilters%}
+                    <tbody class="type{{bar.0.filter.id}}">
+                        <tr class="dishtype"><th>{{bar.0.filter.name}}</th><th></th>
+                        </tr>
+                        {%for foobar in bar|sort_by_price %}
+                                {%if search_value|lower in foobar.name|lower %}
+                                    <tr><td>{{foobar.name}}</td><td>{{foobar.price}}</td></tr>
+                                {%endif%}
+                        {%endfor%}
+                    </tbody>
+                {%endfor%}
+            </table>
+        {%endfor%}
+        </table>
+
+
+    </div>
+{%endblock%}

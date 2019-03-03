@@ -1,0 +1,47 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block js %}
+    <link rel="stylesheet" type="text/css" href="{%static 'main/style-item_detail.css'%}">
+    <script type="text/javascript">
+
+
+    </script>
+
+{%endblock%}
+
+{%block content%}
+<div id="content">
+    <h3>{{nc.name}} Night Canteen</h3>
+    <h4>Phone no : {{nc.phno}}</h4>
+    {%for items in comments%}
+        <div class="commentbox">
+            <span class="glyphicon glyphicon-user userface"></span>
+            <div class="commentwritten">
+                {{items.value}}<br>
+            </div>
+            <div class="likes">
+                <form class="likeform">
+                    <button type="submit">
+                        <span class="glyphicon glyphicon-ok ok_icon"></span>
+                    </button>
+                </form>{{items.likes}}
+            </div>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        {%for foo in comment_on_comment%}
+            {%if foo.parent.id == items.id%}
+                {{foo.value}}<br>
+                {{foo.likes}}likes<br>
+            {%endif%}
+        {%endfor%}
+
+    {%endfor%}
+
+    <form>
+        <textarea class="commentinput" name="comm" placeholder="Add a  comment" rows="3"></textarea>
+        <br>
+        <button type="submit">Submit</button>
+        <button type="reset">Clear</button>
+    </form>
+</div>
+{%endblock%}
