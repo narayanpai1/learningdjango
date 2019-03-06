@@ -3,7 +3,18 @@
 {% block js %}
     <link rel="stylesheet" type="text/css" href="{%static 'main/style-item_detail.css'%}">
     <script type="text/javascript">
-
+        var id;
+        function liked(id){
+            if(document.querySelector("#ok_icon"+id).style.color=="grey")
+            {
+                document.querySelector("#ok_icon"+id).style.color="blue";
+                document.querySelector("#ok_button"+id).value[0]='0';
+            }
+            else{
+                document.querySelector("#ok_icon"+id).style.color="grey";
+                document.querySelector("#ok_button"+id).value[0]='1';
+            }
+        }
 
     </script>
 
@@ -15,28 +26,51 @@
     <h4>Phone no : {{nc.phno}}</h4>
     {%for items in comments%}
         <div class="commentbox">
-            <span class="glyphicon glyphicon-user userface"></span>
-            <div class="commentwritten">
-                {{items.value}}<br>
+            Name
+            <hr style="margin:2px 0px;border-color:black;">
+            <div class="pho">
+                <i class="glyphicon glyphicon-user photo"></i>
             </div>
-            <div class="likes">
-                <form class="likeform">
-                    <button type="submit">
-                        <span class="glyphicon glyphicon-ok ok_icon"></span>
-                    </button>
-                </form>{{items.likes}}
+            <div class="commentwritten">
+                {{items.value}}
+                <hr style="margin:2px 0px;border-color:black;">
+                <form class="likeform" action="" method="post">
+                        {%csrf_token%}
+                        <button type="submit" name="likes" value="1{{items.id}}" onclick="liked( {{items.id}} )" id="ok_button{{items.id}}">
+                            <span class="glyphicon glyphicon-ok ok_icon" id="ok_icon{{items.id}}" style="color:grey;"></span>
+                        </button>{{items.likes}}
+                        <button type="submit" value="1" onclick="comment()" id="comment_button{{items.id}}">
+                            <span class="glyphicon glyphicon-comment" id="comment_icon{{items.id}}"></span>
+                        </button>
+                </form>
             </div>
         </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        {%for foo in comment_on_comment%}
-            {%if foo.parent.id == items.id%}
-                {{foo.value}}<br>
-                {{foo.likes}}likes<br>
-            {%endif%}
-        {%endfor%}
-
+        <div class="commentbox commentbox2">
+            {%for foo in comment_on_comment%}
+                {%if foo.parent.id == items.id%}
+                    Name
+                    <hr style="margin:2px 0px;border-color:black;">
+                    <div class="pho">
+                        <i class="glyphicon glyphicon-user photo"></i>
+                    </div>
+                    <div class="commentwritten">
+                        {{foo.value}}
+                        <hr style="margin:2px 0px;border-color:black;">
+                        <form class="likeform" action="" method="post">
+                                {%csrf_token%}
+                                <button type="submit" name="likes" value="1{{items.id}}" onclick="liked( {{items.id}} )" id="ok_button{{items.id}}">
+                                    <span class="glyphicon glyphicon-ok ok_icon" id="ok_icon{{items.id}}" style="color:grey;"></span>
+                                </button>{{foo.likes}}
+                                <button type="submit" value="1" onclick="comment()" id="comment_button{{items.id}}">
+                                    <span class="glyphicon glyphicon-comment" id="comment_icon{{items.id}}"></span>
+                                </button>
+                        </form>
+                    </div>
+                {%endif%}
+            {%endfor%}
+        </div>
     {%endfor%}
-
+    <br>
     <form>
         <textarea class="commentinput" name="comm" placeholder="Add a  comment" rows="3"></textarea>
         <br>

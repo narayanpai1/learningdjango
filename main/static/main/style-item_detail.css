@@ -13,28 +13,48 @@
 }
 
 
-.userface{
-    font-size: 30px;
+.pic{
+    width:100%;
 }
 
 .commentwritten{
     display: inline-block;
-    width:95%;
+    width:92%;
+    float:right;
 }
+
+/*
+.glyphicon.glyphicon-user.photo{
+    width:8% !important;
+    display: inline-block;
+    height: auto !important;
+}
+*/
+
+.pho{
+    width:8%;
+    display: inline-block;
+    font-size:30px;
+    padding-left:6px;
+}
+
 
 .commentbox{
-    background-color: azure;
+    background-color:antiquewhite;
+    overflow: auto;
 }
 
-.likes button{
+.likeform button{
     background-color:rgba(0,0,0,0);
     border:0px;
-}
-.likes{
-    float: right;
-    width:95%;
 }
 
 .likeform{
     display: inline-block;
+    position: relative;
+    bottom:0px;
+}
+.commentbox2{
+    width:95%;
+    float:right;
 }

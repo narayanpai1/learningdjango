@@ -22,9 +22,32 @@ def menus(request):
 
 
 def nc_detail(request,nc_id):
+    idno=0
+    if request.method=="POST":
+        likes=request.POST.dict().get("likes")
+        for_loop_counter = 0
+        for i in likes:
+            if for_loop_counter==0:
+                like = int(i)
+                for_loop_counter=1
+            else:
+                idno=int(i)+idno*10
+
+        nc1 = nc_comments.objects.all().filter(id=idno).first()
+        if like==1:
+            nc1.likes+=1
+
+        else:
+            nc1.likes -= 1
+
+        nc1.save()
+
+
     context={'title':nc.objects.all().filter(id=nc_id).first().name,
              'nc':nc.objects.all().filter(id=nc_id).first(),
              'comments':nc_comments.objects.all().filter(nc__id=nc_id),
-             'comment_on_comment':comment_on_comment.objects.all()
+             'comment_on_comment':comment_on_comment.objects.all(),
+             'like':likes,
+             'idno':idno
              }
     return render(request, 'main/nc_detail.html', context)
