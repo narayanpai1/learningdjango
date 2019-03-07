@@ -59,10 +59,10 @@
                         <form class="likeform" action="" method="post">
                                 {%csrf_token%}
                                 <button type="submit" name="likes" value="1{{items.id}}" onclick="liked( {{items.id}} )" id="ok_button{{items.id}}">
-                                    <span class="glyphicon glyphicon-ok ok_icon" id="ok_icon{{items.id}}" style="color:grey;"></span>
+                                    <span class="glyphicon glyphicon-ok ok_icon" style="color:grey;"></span>
                                 </button>{{foo.likes}}
-                                <button type="submit" value="1" onclick="comment()" id="comment_button{{items.id}}">
-                                    <span class="glyphicon glyphicon-comment" id="comment_icon{{items.id}}"></span>
+                                <button type="submit" value="1" onclick="comment()">
+                                    <span class="glyphicon glyphicon-comment"></span>
                                 </button>
                         </form>
                     </div>

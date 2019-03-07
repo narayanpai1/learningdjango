@@ -47,7 +47,10 @@ def nc_detail(request,nc_id):
              'nc':nc.objects.all().filter(id=nc_id).first(),
              'comments':nc_comments.objects.all().filter(nc__id=nc_id),
              'comment_on_comment':comment_on_comment.objects.all(),
-             'like':likes,
-             'idno':idno
              }
     return render(request, 'main/nc_detail.html', context)
+
+
+def current_items(request, nc_id):
+    context={}
+    return render(request, 'main/nc_detail.html')

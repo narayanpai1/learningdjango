@@ -1,0 +1,11 @@
+{%extends 'admin/base.html'%}
+{%load extras%}
+{%block custom%}
+    <br><br>
+    {{user.profile.ncnumber}}
+    {%if user.is_authenticated %}
+    {% if user.profile.ncnumber != 0 %}
+        <a href="{% url 'current_items' user.profile.ncnumber %}"><span style="">Go to current items</span> </a>
+    {%endif%}
+    {%endif%}
+{%endblock%}

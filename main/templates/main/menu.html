@@ -109,7 +109,7 @@
         {% regroup dishes by nc.id as groupeditems %}
         {%for foo in groupeditems%}
             <div class="NCName">
-                <a href="\{{foo.1.0.nc.id}}">{{foo.1.0.nc.name}}</a>
+                <a href="/{{foo.1.0.nc.id}}">{{foo.1.0.nc.name}}</a>
                     <span class="menuExtension ext{{foo.1.0.nc.id}}"><button class="up" onclick="removeElement(1,'{{foo.1.0.nc.id}}')"><i class="glyphicon glyphicon-chevron-up"></i></button>
                     <button class="down" onclick="removeElement(0,'{{foo.1.0.nc.id}}')">
                     <i class="glyphicon glyphicon-chevron-down" ></i></button>
@@ -135,6 +135,8 @@
         {%endfor%}
         </table>
 
-
+        {%if user.profile.ncnumber == 0 %}
+            hello
+        {%endif%}
     </div>
 {%endblock%}

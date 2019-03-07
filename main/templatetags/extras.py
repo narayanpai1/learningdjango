@@ -20,6 +20,15 @@ def sort_by_filter(in_list):
     return out_list
 
 
+@register.simple_tag
+def checknc(in_list,user_id):
+    return in_list
+
+
+@register.simple_tag
+def sort_by_price(input):
+    return input+1
+
 @register.filter
 def sort_by_price(in_list):
     for i in range(len(in_list)-1):
@@ -35,3 +44,7 @@ def sort_by_price(in_list):
         in_list[i].price=temp
 
     return in_list
+
+@register.filter
+def findncnumber(indict):
+    return indict.get('ncnumber', -1)
