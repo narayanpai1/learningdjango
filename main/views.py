@@ -53,4 +53,4 @@ def nc_detail(request,nc_id):
 
 def current_items(request, nc_id):
     context={}
-    return render(request, 'main/nc_detail.html')
+    return render(request, 'main/nc_detail.html', context)
