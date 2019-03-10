@@ -1,0 +1,32 @@
+{%extends 'main/base.html'%}
+{%block js%}
+    <style type="text/css" rel="stylesheet">
+        .nc_div{
+            background-color:#f6f6f6;
+            width:50%;
+            padding: 7px;
+            margin: 10px;
+        }
+        .ncname{
+            font-size:20px;
+            color:black;
+        }
+
+        .phno{
+            font-size:10px;
+            color:black;
+        }
+
+    </style>
+{%endblock%}
+{%block content%}
+    <br>
+    {% for canteen in nc%}
+        <div class="nc_div">
+            <div class="ncname">
+                {{canteen.name}}
+            </div>
+            <div class="phno">Phone number : {{canteen.phno}}</div>
+        </div>
+    {%endfor%}
+{%endblock%}

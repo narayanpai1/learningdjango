@@ -1,10 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{%load extras%}
+{%load static%}
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <link href="{%static 'main/css/bootstrap.min.css'%}" rel="stylesheet">
+        <title>Manage-{{nc.name}}</title>
+        <link rel="stylesheet" type="text/css" href="{%static 'main/style-current_items.css'%}">
+        <script type="text/javascript">
+            var filter_id;
+            function filterapplied(filter_id){
+                if(document.querySelector("#indicator"+filter_id).style.backgroundColor=="grey"){
+                    document.querySelector("#indicator"+filter_id).style.backgroundColor="red";
+                    document.querySelector("#available_table"+filter_id).style.display="table-row-group";
+                    document.querySelector("#non_available_table"+filter_id).style.display="table-row-group";
 
-</body>
+                }
+                else{
+                    document.querySelector("#indicator"+filter_id).style.backgroundColor="grey";
+                    document.querySelector("#available_table"+filter_id).style.display="none";
+                    document.querySelector("#non_available_table"+filter_id).style.display="none";
+                }
+            }
+
+            var search_value;
+            function search_bar(search_value){
+                 rows=document.querySelectorAll(".each_row .item_name");
+                 for(var j=0;j<rows.length;j++){
+                        document.querySelectorAll(".each_row")[j].style.display="table-row";
+                 }
+                 for(var j=0;j<rows.length;j++){
+                    if(!rows[j].innerHTML.toLowerCase().includes(search_value.toLowerCase())){
+                        document.querySelectorAll(".each_row")[j].style.display="none";
+                    }
+                 }
+            }
+        </script>
+    </head>
+    <body style="margin: 0px;">
+        <div id="headerdiv">
+            <span id="leftheading">MANAGE ITEMS | {{nc.name|upper}}</span>
+            <span id="rightheading">WELCOME {{user|upper}}</span>
+        </div>
+        <div id="content" style="padding:10px 20px;">
+            <div style="color:#417690;"><a href="/admin">Go to current orders</a></div>
+            {% if user.is_authenticated%}
+            {% if user.profile.ncnumber == nc.id %}
+                <input type="text" class="search" placeholder="Search here" oninput="search_bar(this.value)">
+                <div class="container-fluid">
+                    <div class="col-xs-12 col-sm-4" id="filterbar">
+                        <div id="filters_header">Filters</div>
+                        <ul type="none" style="padding-left:10px;">
+                            {%for foo in filter %}
+                            <li>
+                                <!--a small colored span before button to act as an indicator-->
+                                <span id="indicator{{foo.id}}" content=" " style="background-color:red;">&nbsp;</span>
+                                <button value="{{foo.id}}" id="button{{foo.id}}" onclick="filterapplied({{foo.id}})">{{foo.name}}</button>
+                                <br>
+                            </li>
+                            {%endfor%}
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 col-sm-8">
+                        <div class="table_heading">Available dishes</div>
+                        <table>
+                            {%sort_by_filter dishes as sorted_by_filters%}
+                            {%for foo in sorted_by_filters%}
+                                <tbody class="current_table" id="available_table{{foo.0.filter.id}}">
+                                    <tr><th>{{foo.0.filter.name}}</th></tr>
+                                    {%for foobar in foo%}
+                                        {%if foobar.currently_present == True %}
+                                        <tr class="each_row"><td class="item_name">{{foobar.name}}</td><td>
+                                            <form method="post" action="">
+                                                {%csrf_token%}
+                                                <button type="submit" name="add_or_remove" value="{{foobar.id}}"><i class="glyphicon glyphicon-remove-sign" ></i></button>
+                                            </form>
+                                        </td></tr>
+                                        {%endif%}
+                                    {%endfor%}
+                                </tbody>
+                             {%endfor%}
+                        </table>
+                        <div class="table_heading">Non-available dishes</div>
+                        <table>
+                            {%sort_by_filter dishes as sorted_by_filters%}
+                            {%for foo in sorted_by_filters%}
+                                <tbody class="current_table" id="non_available_table{{foo.0.filter.id}}">
+                                    <tr><th>{{foo.0.filter.name}}</th></tr>
+                                    {%for foobar in foo%}
+                                        {%if foobar.currently_present == False %}
+                                        <tr class="each_row"><td class="item_name">{{foobar.name}}</td><td>
+                                            <form method="post" action="">
+                                                {%csrf_token%}
+                                                <button type="submit" name="add_or_remove" value="{{foobar.id}}"><i class="glyphicon glyphicon-plus-sign" ></i></button>
+                                            </form>
+                                        </td></tr>
+                                        {%endif%}
+                                    {%endfor%}
+                                </tbody>
+                             {%endfor%}
+                        </table>
+                    </div>
+                </div>
+            {%else%}
+                <div style="font-size:20px;color:#417690;width:100%;"><center>Sorry.You don't have the permissions to access current items :(</center></div>
+            {%endif%}
+            {%else%}
+                <div style="font-size:20px;color:#417690;width:100%;"><center>Sorry.You don't have the permissions to access current items :(</center></div>
+            {%endif%}
+        </div>
+    </body>
 </html>

@@ -16,7 +16,7 @@ body{
     color:white;
 }
 #logo{
-    font-family:'Snap ITC';
+    font-family:'Srisakdi','Snap ITC';
     bottom:6px;
     font-size:45px;
     left:15px;
@@ -109,7 +109,7 @@ body{
         display: none;
     }
     #logo{
-        font-size:25px
+        font-size:40px;
     }
 }
 @media screen and (min-width: 767px) {
@@ -122,4 +122,11 @@ body{
 }
 .navmenu:hover{
     color:white;
+}
+
+
+
+#content{
+    margin:15px 15px;
+    font-size: 17px;
 }

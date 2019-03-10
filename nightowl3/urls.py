@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from main.views import home, menus, nc_detail, current_items
+from main.views import home, menus, current, contact_us
 from django.conf.urls import url
 
 
@@ -17,8 +17,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='mainpage'),
     path('menus/', menus, name='menus'),
-    path('<int:nc_id>/',nc_detail,name='detail'),
-    path('admin/currentitems/<int:nc_id>',current_items, name="current_items")
+    path('admin/currentitems/<int:nc_id>',current, name="current_items"),
+    path('contact', contact_us, name="contact")
 
 ]
 

@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
 
+# to add nc number for each admin
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
@@ -21,8 +22,6 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(nc_comments)
-admin.site.register(comment_on_comment)
 admin.site.register(filter)
 
 
@@ -39,6 +38,13 @@ class dishesAdmin(admin.ModelAdmin):
     list_display = ['name', 'price','nc__name']
     list_filter = ['nc__name']
     search_fields = ['name']
+
+    def get_queryset(self, request):
+        qs = super(dishesAdmin, self).get_queryset(request)
+        if request.user.profile.ncnumber == 0:
+            return qs
+        else:
+            return qs.filter(nc__id=request.user.profile.ncnumber)
 
     def nc__name(self, obj):
         return obj.nc.name

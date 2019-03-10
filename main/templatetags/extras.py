@@ -21,6 +21,23 @@ def sort_by_filter(in_list):
 
 
 @register.simple_tag
+def sort_by_filter_foreign_key(in_list):
+    maxim=0
+    out_list=[]
+    for foo in in_list:
+        if foo.items.filter.id>maxim:
+            maxim=foo.items.filter.id
+
+    for i in range(maxim):
+        out_list+=[[]]
+
+    for foo in in_list:
+        out_list[foo.items.filter.id-1].append(foo)
+
+    return out_list
+
+
+@register.simple_tag
 def checknc(in_list,user_id):
     return in_list
 

@@ -1,43 +1,25 @@
 {% extends "main/base.html" %}
 {% load static %}
 {% block js %}
-    <link rel="stylesheet" type="text/css" href="{%static 'main/style.css'%}">
+    <link rel="stylesheet" type="text/css" href="{%static 'main/style-home.css'%}">
     <script type="text/javascript">
-            function showlogin(){
-                if(document.querySelector("#logintable").style.display=="none")
-                {document.querySelector("#logintable").style.display="table";
-                }
-                else{
-                 document.querySelector("#logintable").style.display="none";
-                }
-            }
-            function dropdownmenu(){
-                console.log("{{title}}");
-                 if(document.querySelector("#bar2").style.display=="none")
-                {document.querySelector("#bar2").style.display="block";
-                }
-                else{
-                 document.querySelector("#bar2").style.display="none";
-                }
-            }
+
         </script>
 {%endblock%}
 {%block content%}
-    <div id="content">
-        <p>
-        <b>Timings:7.30pm to 4.00am</b>
-        <br><br>
-        Which NC would you like to order from?
-        </p>
-        <div class="container-fluid">
-        <a href="#"><div class="canteenname col-xs-6 col-sm-3"><div class="canteennamebig">III</div><br>BLOCK</div>
-        </a>
-        <a href="#"><div class="canteenname col-xs-6 col-sm-3"><div class="canteennamebig">VII</div><br>BLOCK</div>
-        </a>
-        <a href="#"><div class="canteenname col-xs-6 col-sm-3"><div class="canteennamebig">VIII</div><br>BLOCK</div>
-        </a>
-        <a href="#"><div class="canteenname col-xs-6 col-sm-3"><div class="canteennamebig">GIRLS</div><br>BLOCK</div>
-        </a>
-        </div>
+    <p>
+    <b>Timings:7.30pm to 4.00am</b>
+    <br><br>
+    Which NC would you like to order from?
+    </p>
+    <div class="container-fluid">
+    <a href="#"><div class="canteenname col-xs-6 col-sm-3"><div class="canteennamebig">III</div><br>BLOCK</div>
+    </a>
+    <a href="#"><div class="canteenname col-xs-6 col-sm-3"><div class="canteennamebig">VII</div><br>BLOCK</div>
+    </a>
+    <a href="#"><div class="canteenname col-xs-6 col-sm-3"><div class="canteennamebig">VIII</div><br>BLOCK</div>
+    </a>
+    <a href="#"><div class="canteenname col-xs-6 col-sm-3"><div class="canteennamebig">GIRLS</div><br>BLOCK</div>
+    </a>
     </div>
 {%endblock%}
