@@ -133,3 +133,9 @@ button{
     display:none;
 }
 
+.veg_img{
+  height: 1em;
+  vertical-align: middle;
+  width: auto;
+}
+
