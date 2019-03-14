@@ -39,3 +39,24 @@ def current(request, nc_id):
 def contact_us(request):
     context={'nc': nc.objects.all(), 'title': "Call us"}
     return render(request, 'main/contact_us.html', context)
+
+def api(request):
+    s=""
+    for item in dishes.objects.all():
+        s=s+'{"name":"' + item.name + '", "price":' + str(item.price) + "}"
+        if not(item.id == len(dishes.objects.all())):
+            s=s+', '
+    return HttpResponse('{"context":['+ s + ']}')
+
+def menu_api(request):
+    serialized=""
+    context=dishes.objects.filter(currently_present=True).order_by('nc__id')
+    i=0
+    for item in context :
+        i=i+1
+        dict_obj = model_to_dict(item)
+        serialized  = serialized + json.dumps(dict_obj)
+
+        if i != len(context):
+            serialized= serialized +', '
+    return HttpResponse('{"context":[' +serialized + ']}')
