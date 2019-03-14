@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from .models import dishes, filter, nc
 from .forms import SearchForm
-
+import json
+from django.core import serializers
+from django.forms.models import model_to_dict
+from django.http import HttpResponse
 
 # Create your views here.
 def home(request):

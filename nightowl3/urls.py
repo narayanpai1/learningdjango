@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.urls import path
-from main.views import home, menus, current, contact_us
+from main.views import home, menus, current, contact_us ,api, menu_api
 from django.conf.urls import url
+
 
 
 class CustomAdminSite(admin.AdminSite):
@@ -22,4 +23,3 @@ urlpatterns = [
     path('api', api, name="api"),
     path('menu_api', menu_api)
 ]
-
