@@ -119,7 +119,13 @@
                     </tr>
                     {%for foobar in bar|sort_by_price %}
                             {%if search_value|lower in foobar.name|lower %}
-                                <tr class="each_row"><td class="item_name">{{foobar.name}}</td><td>{{foobar.price}}</td></tr>
+                                <tr class="each_row"><td class="item_name">
+                                    {% if foobar.veg == True %}
+                                    <img class="veg_img" src="{%static 'veg.jpg'%}">
+                                  {%else%}
+                                    <img class="veg_img" src="{%static 'non-veg.png'%}">
+                                  {%endif%}
+                                  &nbsp;{{foobar.name}}</td><td>{{foobar.price}}</td></tr>
                             {%endif%}
                     {%endfor%}
                 </tbody>
