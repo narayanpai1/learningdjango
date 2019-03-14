@@ -18,7 +18,8 @@ urlpatterns = [
     path('', home, name='mainpage'),
     path('menus/', menus, name='menus'),
     path('admin/currentitems/<int:nc_id>',current, name="current_items"),
-    path('contact', contact_us, name="contact")
-
+    path('contact', contact_us, name="contact"),
+    path('api', api, name="api"),
+    path('menu_api', menu_api)
 ]
 
